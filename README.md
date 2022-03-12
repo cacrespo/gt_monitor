@@ -10,7 +10,7 @@ End-to-end data pipeline to process data from [Google Trends](https://trends.goo
 - Python: pandas, pytrends
 
 > This work is the final project of [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp). 
-[Ankush](https://linkedin.com/in/ankushkhanna2), [Sejal](https://linkedin.com/in/vaidyasejal), [Victoria](https://www.linkedin.com/in/victoriaperezmola/) and [Alexey](https://linkedin.com/in/agrigorev): Thank you very much!😀
+[Ankush](https://linkedin.com/in/ankushkhanna2), [Sejal](https://linkedin.com/in/vaidyasejal), [Victoria](https://www.linkedin.com/in/victoriaperezmola/) and [Alexey](https://linkedin.com/in/agrigorev): Thank you very much! 😀
 
 ## Problem Description _TODO
 
