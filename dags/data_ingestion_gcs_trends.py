@@ -21,57 +21,68 @@ PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 AIRFLOW_HOME = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
 
-SEARCH_TERM = 'audiolibro'
-GEO='ES'
 TIMEFRAME='now 1-d'
-HOST_LANGUAGE='es-'+ GEO
+
+trends_querys = {'ES': ['es-ES', 'audiolibro'],
+                 'AR': ['es-AR', 'audiolibro'],
+                 'MX': ['es-MX', 'audiolibro'],
+                 'US': ['en-US', 'audiobook'],
+                 'DE': ['de-DE', 'hörbuch']
+                 }
 
 date = '{{ execution_date.strftime(\'%Y%m%d\') }}'
 local_path_template = AIRFLOW_HOME + f'/{date}'
 gcs_path_template = f'/raw/{date}/'
 
 
-def download_trends(hl: str, local_csv: str, date: str):
-    pytrend = TrendReq(hl=HOST_LANGUAGE)
+def download_trends(geo: str,
+                    host_lang: str,
+                    date: str,
+                    search_term: str,
+                    local_csv: str,
+                    ):
+
+    pytrend = TrendReq(hl=host_lang)
 
     #get interest by region for your search terms
-    pytrend.build_payload(kw_list=[SEARCH_TERM], timeframe=TIMEFRAME)
+    pytrend.build_payload(kw_list=[search_term], timeframe=TIMEFRAME)
 
     # interest by region
     df = pytrend.interest_by_region(resolution='COUNTRY', inc_low_vol=False, inc_geo_code=True).reset_index()
 
-    # Add date and export to .csv
+    # Add date, geo and export to .csv
     df['date'] = date
-    df.to_csv(local_csv + GEO + "_trends.csv", sep = ';', index = False)
+    df['geo'] = geo
+    df.to_csv(local_csv + geo + "_trends.csv", sep = ';', index = False)
 
     # Related Topics
     related_topics = pytrend.related_topics()
 
-    r = related_topics[SEARCH_TERM]['rising']
-    r['results_type'] = 'rising'
+    r = related_topics[search_term]['rising']
+    r['results_type'] = 'risig'
 
-    t = related_topics[SEARCH_TERM]['top']
+    t = related_topics[search_term]['top']
     t['results_type'] = 'top'
 
     cols = ['topic_title', 'value','results_type']
     df = pd.concat([r[cols],t[cols]])
     df['date'] = date
-    df.to_csv(local_csv + GEO + "_related_topics.csv", sep = ";", index = False)
+    df.to_csv(local_csv + geo + "_related_topics.csv", sep = ";", index = False)
 
 
     # Related Queries
     related_queries = pytrend.related_queries()
 
-    r = related_queries[SEARCH_TERM]['rising']
+    r = related_queries[search_term]['rising']
     r['results_type'] = 'rising'
 
-    t = related_queries[SEARCH_TERM]['top']
+    t = related_queries[search_term]['top']
     t['results_type'] = 'top'
 
     cols = ['query', 'value', 'results_type']
     df = pd.concat([r[cols],t[cols]])
     df['date'] = date
-    df.to_csv(local_csv + GEO + "_related_queries.csv", sep = ";", index = False)
+    df.to_csv(local_csv + geo + "_related_queries.csv", sep = ";", index = False)
 
 
 def batch_to_parquet(date):
@@ -96,7 +107,7 @@ def upload_to_gcs(bucket, destination_object_name, date):
 
     for f in filenames:
         blob = bucket.blob(destination_object_name + f)
-        blob.upload_from_filename(AIRFLOW_HOME + '/' + f) #TODO create distinct folders GCSToGCSOperator()
+        blob.upload_from_filename(AIRFLOW_HOME + '/' + f)
 
 default_args = {
     "owner": "airflow",
@@ -106,40 +117,42 @@ default_args = {
 }
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
+
 with DAG(
-    dag_id="data_ingestion_gcs_" + GEO,
+    dag_id="data_ingestion_gcs",
     schedule_interval="@daily",
     default_args=default_args,
     catchup=False,
     max_active_runs=1,
     tags=['dtc-project'],
 ) as dag:
+    for GEO, ITEMS in trends_querys.items():
 
-    download_trends_task = PythonOperator(
-        task_id="download_trends",
-        python_callable=download_trends,
-        op_kwargs={"hl": HOST_LANGUAGE,
-                   "date": date,
-                   "local_csv": local_path_template
-                   },
-    )
-
-    format_to_parquet_task = PythonOperator(
-        task_id="format_to_parquet_task",
-        python_callable=batch_to_parquet,
-        op_kwargs={"date": date
-                   },
+        download_trends_task = PythonOperator(
+            task_id="download_trends_" + GEO,
+            python_callable=download_trends,
+            op_kwargs={"host_lang": ITEMS[0],
+                       "search_term": ITEMS[1],
+                       "geo": GEO,
+                       "date": date,
+                       "local_csv": local_path_template
+                       },
         )
 
-    local_to_gcs_task = PythonOperator(
-        task_id="local_to_gcs_task",
-        python_callable=upload_to_gcs,
-        op_kwargs={
-            "bucket": BUCKET,
-            "destination_object_name": gcs_path_template,
-            "date": date,
-        },
-    )
+        format_to_parquet_task = PythonOperator(
+            task_id="format_to_parquet_task_" + GEO,
+            python_callable=batch_to_parquet,
+            op_kwargs={"date": date
+                       },
+            )
 
-
-    download_trends_task >> format_to_parquet_task >> local_to_gcs_task
+        local_to_gcs_task = PythonOperator(
+            task_id="local_to_gcs_task_" + GEO,
+            python_callable=upload_to_gcs,
+            op_kwargs={
+                "bucket": BUCKET,
+                "destination_object_name": gcs_path_template,
+                "date": date,
+            },
+        )
+        download_trends_task >> format_to_parquet_task >> local_to_gcs_task
