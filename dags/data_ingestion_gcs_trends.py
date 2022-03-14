@@ -50,9 +50,8 @@ def download_trends(geo: str,
     # interest by region
     df = pytrend.interest_by_region(resolution='COUNTRY', inc_low_vol=False, inc_geo_code=True).reset_index()
 
-    # Add date, geo and export to .csv
+    # Add date and export to .csv
     df['date'] = date
-    df['geo'] = geo
     df.to_csv(local_csv + geo + "_trends.csv", sep = ';', index = False)
 
     # Related Topics
@@ -67,6 +66,7 @@ def download_trends(geo: str,
     cols = ['topic_title', 'value','results_type']
     df = pd.concat([r[cols],t[cols]])
     df['date'] = date
+    df['geo'] = geo
     df.to_csv(local_csv + geo + "_related_topics.csv", sep = ";", index = False)
 
 
@@ -82,6 +82,7 @@ def download_trends(geo: str,
     cols = ['query', 'value', 'results_type']
     df = pd.concat([r[cols],t[cols]])
     df['date'] = date
+    df['geo'] = geo
     df.to_csv(local_csv + geo + "_related_queries.csv", sep = ";", index = False)
 
 
