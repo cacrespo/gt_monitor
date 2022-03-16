@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: top_trends
+    description: >
+      Top 20 geos per day from each host language.
+  - name: top_hl_trends
+    description: >
+      Trends values for every day for all our business locations.

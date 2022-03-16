@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: staging
+    database: main-being-341311
+    schema: trends
+    tables: 
+      - name: trends_external_table
+      - name: queries_external_table
+      - name: topics_external_table
+
+models:
+    - name: stg_trends
+      description: >
+        TODO

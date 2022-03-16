@@ -49,9 +49,11 @@ def download_trends(geo: str,
 
     # interest by region
     df = pytrend.interest_by_region(resolution='COUNTRY', inc_low_vol=False, inc_geo_code=True).reset_index()
+    df.columns = ['geoName', 'geoCode', 'value']
 
-    # Add date and export to .csv
+    # Add date, hl and export to .csv
     df['date'] = date
+    df['hl'] = host_lang
     df.to_csv(local_csv + geo + "_trends.csv", sep = ';', index = False)
 
     # Related Topics
