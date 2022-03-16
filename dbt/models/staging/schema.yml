@@ -8,3 +8,8 @@ sources:
       - name: trends_external_table
       - name: queries_external_table
       - name: topics_external_table
+
+models:
+    - name: stg_trends
+      description: >
+        TODO

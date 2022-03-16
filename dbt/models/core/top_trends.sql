@@ -5,7 +5,7 @@ WITH ranking as (
     distinct date, 
     rank 
   FROM 
-    {{ref('staging_trends')}} 
+    {{ref('stg_trends')}} 
   WHERE 
     rank <= 20 
   ORDER by 
