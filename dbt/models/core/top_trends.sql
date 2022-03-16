@@ -26,15 +26,15 @@ SELECT
   f.value AS value_DE 
 from 
   ranking a 
-  LEFT JOIN staging_trends b on a.date = b.date 
+  LEFT JOIN {{ref('stg_trends')}} b on a.date = b.date 
   AND a.rank = b.rank 
-  LEFT JOIN staging_trends c on a.date = c.date 
+  LEFT JOIN {{ref('stg_trends')}} c on a.date = c.date 
   AND a.rank = c.rank 
-  LEFT JOIN staging_trends d on a.date = d.date 
+  LEFT JOIN {{ref('stg_trends')}} d on a.date = d.date 
   AND a.rank = d.rank 
-  LEFT JOIN staging_trends e on a.date = e.date 
+  LEFT JOIN {{ref('stg_trends')}} e on a.date = e.date 
   AND a.rank = e.rank 
-  LEFT JOIN staging_trends f on a.date = f.date 
+  LEFT JOIN {{ref('stg_trends')}} f on a.date = f.date 
   AND a.rank = f.rank 
 WHERE 
   b.hl = 'es-MX' 
