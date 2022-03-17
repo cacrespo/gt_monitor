@@ -78,4 +78,3 @@ UNION ALL
       date DESC, 
       geoCode ASC
   )
-
