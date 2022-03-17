@@ -1,5 +1,10 @@
 -- TODO: Refactor for loop
-{{ config(materialized = 'table') }} (
+{{ config(
+  materialized='table',
+  schema='core'
+) }}
+
+(
   SELECT 
     date, 
     geoCode, 

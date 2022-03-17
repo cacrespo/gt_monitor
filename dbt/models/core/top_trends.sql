@@ -1,4 +1,7 @@
-{{ config(materialized='table') }}
+{{ config(
+  materialized='table',
+  schema='core'
+) }}
 
 WITH ranking as (
   SELECT 
