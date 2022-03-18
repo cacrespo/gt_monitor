@@ -1,4 +1,7 @@
-{{ config(materialized='view') }}
+{{ config(
+  materialized='table',
+  schema='staging'
+) }}
 
 SELECT
 DATE(
