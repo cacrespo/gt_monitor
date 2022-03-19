@@ -114,7 +114,7 @@ def upload_to_gcs(bucket, destination_object_name, date):
 
 default_args = {
     "owner": "airflow",
-    "start_date": days_ago(1),
+    "start_date": datetime(2022, 1, 1), #days_ago(1),
     "depends_on_past": False,
     "retries": 1,
 }
@@ -125,7 +125,7 @@ with DAG(
     dag_id="data_ingestion_gcs",
     schedule_interval="@daily",
     default_args=default_args,
-    catchup=False,
+    catchup=True,
     max_active_runs=1,
     tags=['dtc-project'],
 ) as dag:
