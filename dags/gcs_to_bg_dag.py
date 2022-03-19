@@ -6,6 +6,8 @@ from airflow.utils.dates import days_ago
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator, BigQueryInsertJobOperator
 from airflow.providers.google.cloud.transfers.gcs_to_gcs import GCSToGCSOperator
 
+from datetime import datetime
+
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 
@@ -20,7 +22,7 @@ INPUT_FILETYPE = "parquet"
 
 default_args = {
     "owner": "airflow",
-    "start_date": datetime(2022, 1, ), #days_ago(1),
+    "start_date": datetime(2022, 1, 1), #days_ago(1),
     "depends_on_past": False,
     "retries": 1,
 }

@@ -4,7 +4,8 @@
 ) }}
 
 SELECT 
-    date,
+    date, 
+    geoCode,
     rank,
     value,
     hl
@@ -13,5 +14,6 @@ SELECT
   WHERE 
     rank <= 20 
   ORDER by 
-    date DESC, 
+    date DESC,
+    hl,
     rank ASC
