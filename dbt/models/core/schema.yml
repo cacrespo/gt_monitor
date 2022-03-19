@@ -5,7 +5,7 @@ models:
     description: >
       Top 20 geos per day from each host language.
   
-  - name: top_hl_trends
+  - name: top_trends_hl
     description: >
       Trends values for every day for all our business locations.
   
