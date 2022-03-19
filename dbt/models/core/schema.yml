@@ -4,6 +4,23 @@ models:
   - name: top_trends
     description: >
       Top 20 geos per day from each host language.
+  
   - name: top_hl_trends
     description: >
       Trends values for every day for all our business locations.
+  
+  - name: top_queries
+    description: >
+      Top 10 queries for every day for each host language.
+   
+  - name: top_queries_rising
+    description: >
+      Top 5 rising queries for every day for each host language.
+
+  - name: top_topics
+    description: >
+      Top 10 topics for every day for each host language.
+   
+  - name: top_topics_rising
+    description: >
+      Top 5 rising topics for every day for each host language.
