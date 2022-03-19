@@ -1,17 +1,19 @@
 {{ config(
-  materialized='table',
   schema='core'
 ) }}
 
 SELECT 
     date,
-    rank,
+    geo,
+    topic_title,
     value,
-    hl
+    rank
   FROM 
-    {{ref('stg_trends')}} 
+    {{ref('stg_topics')}} 
   WHERE 
-    rank <= 20 
+    rank <= 10 and
+    results_type = 'top'
   ORDER by 
     date DESC, 
+    geo,
     rank ASC

@@ -13,3 +13,9 @@ models:
     - name: stg_trends
       description: >
         TODO
+    - name: stg_queries
+      description: >
+        TODO
+    - name: stg_topics
+      description: >
+        TODO
