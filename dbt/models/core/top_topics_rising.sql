@@ -6,7 +6,7 @@ SELECT
     date,
     geo,
     topic_title,
-    value
+    value,
     rank
   FROM 
     {{ref('stg_topics')}} 

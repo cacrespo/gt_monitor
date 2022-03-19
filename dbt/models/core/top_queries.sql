@@ -6,7 +6,7 @@ SELECT
     date,
     geo,
     query,
-    value
+    value,
     rank
   FROM 
     {{ref('stg_queries')}} 
