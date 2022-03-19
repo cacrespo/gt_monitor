@@ -5,7 +5,7 @@
 SELECT 
     date,
     geo,
-    topics_title,
+    topic_title,
     value
     rank
   FROM 
