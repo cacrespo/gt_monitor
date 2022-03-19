@@ -13,4 +13,4 @@ topic_title,
 value,
 results_type,
 row_number() over (partition by geo, date, results_type order by value desc) as rank
-FROM {{source('staging','queries_external_table')}}
+FROM {{source('staging','topics_external_table')}}
