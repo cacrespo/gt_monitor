@@ -14,24 +14,28 @@ End-to-end data pipeline to process data from [Google Trends](https://trends.goo
 [Ankush](https://linkedin.com/in/ankushkhanna2), [Sejal](https://linkedin.com/in/vaidyasejal), [Victoria](https://www.linkedin.com/in/victoriaperezmola/) and [Alexey](https://linkedin.com/in/agrigorev): Thank you very much! 😀
 
 ## Problem Description
-- We are interested in explore the relevance and related queries for *'audiobook'* word in searchs from **Google Explore Bar**. Actually the official page support several of our needs, but the team requires:
-- Storage the historical data.
-- Easy way to access to results from specific locations (Argentine, Germany, Mexico, Spain and United States).
-- Link with the previous: 'audiobook' word needs to adapt to distinct languages. "audiolibro" in Spanish, 'Hörbuch' in German, etc.
-- Dashboard in-house with automatic ingestion of information.
+We are interested in exploring the relevance and queries related to the word *'audiobook'* in **Google Explore Bar** searches. Actually the [official page](https://trends.google.com) supports several of our needs, but the team requires:
+- **Storage** of historical data.
+- Ease of access to **results from specific locations** (Argentina, Germany, Mexico, Spain and United States).
+- Link to the abobve: The word 'audiobook' needs to be **adapted to different languages**. "audiolibro" in Spanish, 'Hörbuch' in German, etc.
+- Internal **Dashboard with automatic information ingestion**.
 
 ## Data Pipeline
-First setting up Airflow with Docker-Compose and [pytrends](https://github.com/GeneralMills/pytrends) library. That is a unnoficial API for Google Trends.
+
+> The current development obtains the results for the word "audiobook" exclusively. However, you only need to edit the dictionary in the [following file](dags/data_ingestion_gcs_trends.py#L26-L31) to get the results for any other word.
+
+First you have to configure Airflow with Docker-Compose and the [pytrends](https://github.com/GeneralMills/pytrends) library. The latter is an unofficial API for Google Trends.
 
 In Airflow we have two dags:
-- The first "data_ingestion_gcs_trends":
+- The first one `data_ingestion_gcs_trends.py`:
     - Download the interest by region for "audiobook" for each (five) locations.
     - Download related queries
     - Download related topics
-    - Add some context information and convert into .parquet format
+    - Add some context information and convert into `.parquet` format (the files aren't big size and there is probably no substantial improvement by implementing this but we do it anyway for rather pedagogical purposes).
     - Finally upload to Google Cloud Storage
-- "gcs_to_bq_dag":
-    - Move the files to better order and create external tables in Bigquery.
+- `gcs_to_bq_dag.py`:
+    - Moves and refine the order of files and folders.
+    - Create external tables in Bigquery.
 
 Next transforming the data loaded in DWH to Analytical Views developing a dbt project.
 
