@@ -24,8 +24,9 @@ We are interested in exploring the relevance and queries related to the word *'a
 
 > The current development obtains the results for the word "audiobook" exclusively. However, you only need to edit the dictionary in the [following file](dags/data_ingestion_gcs_trends.py#L26-L31) to get the results for any other word.
 
-First you have to configure Airflow with Docker-Compose and the [pytrends](https://github.com/GeneralMills/pytrends) library. The latter is an unofficial API for Google Trends.
+The pipeline works on Airflow with Docker-Compose and the [pytrends](https://github.com/GeneralMills/pytrends) library. The latter is an unofficial API for Google Trends.
 
+### Airflow
 In Airflow we have two dags:
 - The first one `data_ingestion_gcs_trends.py`:
     - Download the interest by region for "audiobook" for each (five) locations.
@@ -37,6 +38,7 @@ In Airflow we have two dags:
     - Moves and refine the order of files and folders.
     - Create external tables in Bigquery.
 
+### dbt
 We then transform the loaded data by developing a **dbt project**.
 
 In dbt we set up two models:
@@ -51,28 +53,27 @@ In dbt we set up two models:
 
 > All these transformations are intended to facilitate the future visualization of the results.
 
-Finally we connect Bigquery (producion schema) with Google Studio and make [this dashboard](https://datastudio.google.com/reporting/b750ff84-5922-411d-8609-53e7b300fa93).
+### Google Studio
+Finally we connect Bigquery (core dataset) with Google Studio and make [this dashboard](https://datastudio.google.com/reporting/b750ff84-5922-411d-8609-53e7b300fa93).
 
 Some aditionals notes:
 - We put comments in all files for more details.
-- Dags scheduled daily.
-- In dbt we have two enviroments accord branches for the repository (main and development). "run all" production job run daily from main.
-
+- Dags and dbt scheduled daily.
 
 ## Instructions to Run
 1. Clone the repository.
-2. Complete .env_example file with correct information (you need gcp-service-accounts-credentials)
+2. Complete `.env_example` file with correct information (you need gcp-service-accounts-credentials)
 3. Run
 
 `sudo docker compose up`
 
-4. Go to localhost:8080 in browser (user: airflow, pass: airflow) and run all dags.
+4. Go to [localhost:8080](localhost:8080) in browser (user: airflow, pass: airflow) and run all dags.
 
-5. Then, for analytcs engineering, you need setup dbt cloud with bigquery. Please follow this [steps](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_4_analytics_engineering/dbt_cloud_setup.md).
+5. Then, for analytcs engineering, you need setup dbt cloud with Bigquery. Please follow this [steps](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_4_analytics_engineering/dbt_cloud_setup.md).
 
 Check values from these files: 
-- schemas.yml in staging model
-- dbt_project.yml
+- `schemas.yml` in staging model
+- `dbt_project.yml`
 
 In dbt console run:
 `dbt deps`
@@ -80,4 +81,4 @@ In dbt console run:
 
 If all goes OK you can see "staging" and "core" datasets in Bigquery.
 
-6. Finally, connect BigQuery and Data Studio with just a few clicks.
+6. Finally, connect BigQuery and Data Studio with just a [few clicks](https://support.google.com/datastudio/answer/6370296#zippy=%2Cin-this-article).
