@@ -62,7 +62,9 @@ Some aditionals notes:
 
 `sudo docker compose up`
 
-Then you need connect dbt to bigquery. Please follow this [steps](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_4_analytics_engineering/dbt_cloud_setup.md):
+4. Go to localhost:8080 in browser (user: airflow, pass: airflow) and run all dags.
+
+5. Then, for analytcs engineering, you need setup dbt cloud with bigquery. Please follow this [steps](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_4_analytics_engineering/dbt_cloud_setup.md).
 
 Check values from these files: 
 - schemas.yml in staging model
@@ -72,4 +74,6 @@ In dbt console run:
 `dbt deps`
 `dbt run`
 
-Thats all! If all goes OK you can see "staging" and "core" datasets in Bigquery. 
+If all goes OK you can see "staging" and "core" datasets in Bigquery.
+
+6. Finally, connect BigQuery and Data Studio with just a few clicks.
