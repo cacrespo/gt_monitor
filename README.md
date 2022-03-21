@@ -37,21 +37,21 @@ In Airflow we have two dags:
     - Moves and refine the order of files and folders.
     - Create external tables in Bigquery.
 
-Next transforming the data loaded in DWH to Analytical Views developing a dbt project.
+We then transform the loaded data by developing a **dbt project**.
 
-In dbt we configured two models:
+In dbt we set up two models:
 - Staging: 
-    - Separate views from queries, topics and trends. 
-    - For every table, cast string date to correct format and include a column with rank value. 
+    - Separate queries, topics and trends. 
+    - For each table, cast string date to the correct format and include a column with rank value. 
 - Core: 
-    - Transform HL column to join all tables (this could be do it in the first but we want to work with a hipotetical needs case).
-    - Divide tables in tops and rising (see Google Trends page to visualizate).
-    - Mantain only up to 20 rows in trends, 10 queries/topics and 5 rising.
-    - Create a specific table with the data from our selected countrys.
+    - Transform *geo* column to join all tables (this could be done at the beginning but we chose to work with a hypothetical needs case).
+    - Split the tables into tops and rising (see Google Trends page to visualize this).
+    - Keep only up to 20 rows in trends, 10 queries/topics and 5 rising.
+    - Create a specific table with data from our selected countries.
 
-> All this transformations has the objetive to make more easy future visualization of results.
+> All these transformations are intended to facilitate the future visualization of the results.
 
-Finally we connect Bigquery Producion Schema with Google Studio and make this dashboard.
+Finally we connect Bigquery (producion schema) with Google Studio and make [this dashboard](https://datastudio.google.com/reporting/b750ff84-5922-411d-8609-53e7b300fa93).
 
 Some aditionals notes:
 - We put comments in all files for more details.
