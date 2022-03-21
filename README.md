@@ -17,7 +17,7 @@ End-to-end data pipeline to process data from [Google Trends](https://trends.goo
 We are interested in exploring the relevance and queries related to the word *'audiobook'* in **Google Explore Bar** searches. Actually the [official page](https://trends.google.com) supports several of our needs, but the team requires:
 - **Storage** of historical data.
 - Ease of access to **results from specific locations** (Argentina, Germany, Mexico, Spain and United States).
-- Link to the abobve: The word 'audiobook' needs to be **adapted to different languages**. "audiolibro" in Spanish, 'Hörbuch' in German, etc.
+- Link to the above: The word 'audiobook' needs to be **adapted to different languages**. "audiolibro" in Spanish, 'Hörbuch' in German, etc.
 - Internal **Dashboard with automatic information ingestion**.
 
 ## Data Pipeline
