@@ -20,6 +20,8 @@ We are interested in exploring the relevance and queries related to the word *'a
 - Link to the above: The word 'audiobook' needs to be **adapted to different languages**. "audiolibro" in Spanish, 'Hörbuch' in German, etc.
 - Internal **Dashboard with automatic information ingestion**.
 
+To solve all this we are going to implement the following data pipeline. 
+
 ## Data Pipeline
 
 > The current development obtains the results for the word "audiobook" exclusively. However, you only need to edit the dictionary in the [following file](dags/data_ingestion_gcs_trends.py#L26-L31) to get the results for any other word.
