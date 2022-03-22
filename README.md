@@ -17,7 +17,7 @@ End-to-end data pipeline to process data from [Google Trends](https://trends.goo
 We are interested in exploring the relevance and queries related to the word *'audiobook'* in **Google Explore Bar** searches. Actually the [official page](https://trends.google.com) supports several of our needs, but the (hypothetical) team requires:
 - **Storage** of historical data.
 - Ease of access to **results from specific locations** (Argentina, Germany, Mexico, Spain and United States).
-- Link to the above: The word 'audiobook' needs to be **adapted to different languages**. "audiolibro" in Spanish, 'Hörbuch' in German, etc.
+- Linked to the above: The word 'audiobook' needs to be **adapted to different languages**. "audiolibro" in Spanish, 'Hörbuch' in German, etc.
 - Internal **Dashboard with automatic information ingestion**.
 
 To solve all this we are going to implement the following data pipeline. 
@@ -71,7 +71,7 @@ Some aditionals notes:
 
 4. Go to [localhost:8080](localhost:8080) in browser (user: airflow, pass: airflow) and run all dags.
 
-5. Then, for analytcs engineering, you need setup dbt cloud with Bigquery. Please follow this [steps](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_4_analytics_engineering/dbt_cloud_setup.md).
+5. Then, for analytcs engineering, you need setup dbt cloud with Bigquery. Please follow these [steps](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_4_analytics_engineering/dbt_cloud_setup.md).
 
 Check values from these files: 
 - `schemas.yml` in staging model
