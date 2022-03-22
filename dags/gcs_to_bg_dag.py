@@ -31,7 +31,7 @@ default_args = {
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
     dag_id="gcs_to_bq_dag",
-    schedule_interval="@daily",
+    schedule_interval="0 1 * * *", # to ensure no overlap with data ingestion
     default_args=default_args,
     catchup=True,
     max_active_runs=1,
