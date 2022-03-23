@@ -64,8 +64,7 @@ Some aditionals notes:
 
 ## Instructions to Run
 1. Clone the repository.
-2. Check values from: 
-- `docker-compose.yaml` (all relative to GCP credentials) 
+2. Modify values from `docker-compose.yaml` (all relative to GCP credentials) 
 3. Complete `.env_example` file with correct information (you need gcp-service-accounts-credentials)
 4. Run
 
