@@ -1,10 +1,5 @@
 {{ config(
-  schema='core', 
-  partition_by={
-      "field": "date",
-      "data_type": "date",
-      "granularity": "month"
-    }
+  schema='core'
 ) }}
 
 SELECT 
