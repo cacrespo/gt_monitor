@@ -25,7 +25,3 @@ SELECT
   WHERE 
     rank <= 10 and
     results_type = 'top'
-  ORDER by 
-    date DESC, 
-    geo,
-    rank ASC
