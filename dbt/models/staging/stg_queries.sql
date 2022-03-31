@@ -7,6 +7,7 @@ DATE(
 CAST(SUBSTR(cast(date as string), 0, 4) AS INT),
 CAST(SUBSTR(cast(date as string), 5, 2) AS INT), 
 CAST(SUBSTR(cast(date as string), 7, 2) AS INT)) as date,
+date as date_original,
 geo,
 query, 
 value,
